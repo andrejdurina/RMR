@@ -1,5 +1,6 @@
 #include "position.h"
 
+
 Position::Position()
 {
     l_r = -1;
@@ -9,34 +10,39 @@ Position::Position()
 
 
 void Position::processData(TKobukiData data){
+
+        //Encoder overflow.
+//       if(data.EncoderRight >= 65534)
+//       {
+//           l_r = 0;
+//       };
+
+//       if(data.EncoderLeft >= 65534)
+//       {
+//           l_l = 0;
+//       };
+
     // Check 1st time encoder values could be rng.
-     if(l_r == -1 && l == -1)
+     if(l_r == -1 && l_l == -1)
         {
            l_r = data.EncoderRight;
            l_l = data.EncoderLeft;
         }
     else
         {//Position of robot.
-          pos.coord2D.x = TICK * (data.EncoderRight - getDistanceR());
-          pos.coord2D.y = TICK * (data.EncoderLeft - getDistanceL());
-          l_r = data.EncoderRight;
-          l_l = data.EncoderLeft;
+          l_r = TICK * (data.EncoderRight - getEncR());
+          l_l = TICK * (data.EncoderRight - getEncL());
+
+          l = (l_l + l_r)/2;
+
+          pos.coord2D.x = getPosX() + l*cos(getRotation());
+          pos.coord2D.y = getPosY() + l*sin(getRotation());
+
+          setEncR(data.EncoderRight);
+          setEncL(data.EncoderLeft);
         }
-
         //Rotation of robot.
-      pos.fi = l_r - l_l / wheel_base;
-
-       //Encoder overflow.
-      if(data.EncoderRight >= 65534)
-      {
-          //l_r = 0;
-
-      };
-
-      if(data.EncoderLeft >= 65534)
-      {
-         // l_l = 0;
-      };
+      pos.fi = ((l_r - l_l) / wheel_base) / M_PI * 180;
 
 };
 
@@ -75,12 +81,40 @@ void Position::setFi(double fi)
     pos.fi = fi;
 }
 
-double Position::getDistanceR()
+int Position::getDistanceR()
 {
     return l_r;
 }
 
-double Position::getDistanceL()
+int Position::getDistanceL()
 {
     return l_l;
+}
+
+double Position::getPosX()
+{
+   return pos.coord2D.x;
+
+}
+
+double Position::getPosY()
+{
+    return pos.coord2D.y;
+}
+
+int Position::getEncR()
+{
+    return enc_r;
+}
+int Position::getEncL()
+{
+    return enc_l;
+}
+void Position::setEncR(int value)
+{
+    enc_r = value;
+}
+void Position::setEncL(int value)
+{
+    enc_l = value;
 }

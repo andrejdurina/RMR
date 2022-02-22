@@ -87,10 +87,11 @@ void MainWindow::processThisRobot()
 {
 
 
-
+    robotHandler.processData(robotdata);
     if(datacounter%5)
     {
-        emit uiValuesChanged(robotrobotdata.EncoderLeft,11,12);
+        //emit uiValuesChanged(robotdata.EncoderLeft,11,12);
+        emit uiValuesChanged(robotHandler.getPosX(),robotHandler.getPosY(),robotHandler.getRotation());
     }
     datacounter++;
 
@@ -286,8 +287,6 @@ void MainWindow::robotprocess()
             processThisRobot();
         }
 
-        robotPosition = robotHandler.processData(robotdata);
-
     }
 }
 
@@ -314,3 +313,11 @@ void MainWindow::getNewFrame()
 {
 
 }
+
+void MainWindow::on_pushButton_8_clicked()
+{
+    robotHandler.setX(0);
+    robotHandler.setY(0);
+    robotHandler.setFi(0);
+}
+

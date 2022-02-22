@@ -1,7 +1,7 @@
 #ifndef POSITION_H
 #define POSITION_H
 #include "ckobuki.h"
-
+#include "math.h"
 
         struct Coords{
             double x;
@@ -28,18 +28,28 @@ class Position
        int l;         //Vzdialenost
        int l_r;       //Prejdena vzdialenost praveho kolesa
        int l_l;       //Prejdena vzdialenost laveho kolesa
+       int enc_r;
+       int enc_l;
        RobotPosition pos;
 
  // Prototypy funkcií
         Position();
-        Coords getPosition(void);
-        double getRotation(void);
         void processData(TKobukiData data);
+        //Setters
         void setX(double x);
         void setY(double y);
         void setFi(double fi);
-        double getDistanceR();
-        double getDistanceL();
+        void setEncR(int value);
+        void setEncL(int value);
+        //Getters
+        Coords getPosition(void);
+        double getRotation(void);
+        int getDistanceR();
+        int getDistanceL();
+        int getEncR();
+        int getEncL();
+        double getPosX();
+        double getPosY();
 };
 
 #endif // POSITION_H

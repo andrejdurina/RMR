@@ -89,6 +89,8 @@ private slots:
     void on_pushButton_clicked();
     void getNewFrame();
 
+    void on_pushButton_8_clicked();
+
 private:
      JOYINFO joystickInfo;
      Ui::MainWindow *ui;
@@ -100,7 +102,6 @@ private:
      TKobukiData robotdata;
      int datacounter;
      QTimer *timer;
-     RobotPosition posHandler;
      Position robotHandler;
 
 
