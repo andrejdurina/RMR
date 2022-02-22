@@ -5,13 +5,18 @@ Position::Position()
 {
     l_r = -1;
     l_l = -1;
-
+    setX(0);
+    setY(0);
+    setFi(0);
+    setEncR(0);
+    setEncL(0);
 };
 
 
 void Position::processData(TKobukiData data){
 
-        //Encoder overflow.
+//    signed short gyroRotation = ; gyroangle/100
+        //Encoder overflow. 65 535
 //       if(data.EncoderRight >= 65534)
 //       {
 //           l_r = 0;
@@ -22,14 +27,14 @@ void Position::processData(TKobukiData data){
 //           l_l = 0;
 //       };
 
-    // Check 1st time encoder values could be rng.
+    // Encoder initial position values!!
      if(l_r == -1 && l_l == -1)
         {
            l_r = data.EncoderRight;
            l_l = data.EncoderLeft;
         }
     else
-        {//Position of robot.
+        {//Position & rotation of robot.
           l_r = TICK * (data.EncoderRight - getEncR());
           l_l = TICK * (data.EncoderRight - getEncL());
 
@@ -37,27 +42,17 @@ void Position::processData(TKobukiData data){
 
           pos.coord2D.x = getPosX() + l*cos(getRotation());
           pos.coord2D.y = getPosY() + l*sin(getRotation());
+          pos.fi = getRotation() + (((l_r - l_l) / wheel_base) / M_PI * 180);
 
           setEncR(data.EncoderRight);
           setEncL(data.EncoderLeft);
         }
-        //Rotation of robot.
-      pos.fi = ((l_r - l_l) / wheel_base) / M_PI * 180;
-
 };
 
 
 
 Coords Position::getPosition(void)
 {
-//    unsigned short timestamp = data.timestamp;
-//    unsigned short right = data.EncoderRight;
-//    unsigned short left =  data.EncoderLeft;
-//    signed short gyroRotation = ; gyroangle/100
-
-    //Encoders overflow!! 65 535
-    //Encoder initial position value!!
-
     return pos.coord2D;
 };
 

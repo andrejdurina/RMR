@@ -41,6 +41,7 @@ class Position
         void setFi(double fi);
         void setEncR(int value);
         void setEncL(int value);
+
         //Getters
         Coords getPosition(void);
         double getRotation(void);
