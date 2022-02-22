@@ -90,8 +90,7 @@ void MainWindow::processThisRobot()
 
     if(datacounter%5)
     {
-
-        emit uiValuesChanged(robotdata.EncoderLeft,11,12);
+        emit uiValuesChanged(robotrobotdata.EncoderLeft,11,12);
     }
     datacounter++;
 
@@ -287,7 +286,7 @@ void MainWindow::robotprocess()
             processThisRobot();
         }
 
-        robotPosition.getPosition(robotdata);
+        robotPosition = robotHandler.processData(robotdata);
 
     }
 }

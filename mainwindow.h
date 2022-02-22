@@ -24,6 +24,7 @@
 #include "opencv2/videoio.hpp"
 #include "opencv2/imgcodecs.hpp"*/
 #include "position.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -89,9 +90,8 @@ private slots:
     void getNewFrame();
 
 private:
-     Position robotPosition;
      JOYINFO joystickInfo;
-    Ui::MainWindow *ui;
+     Ui::MainWindow *ui;
      void paintEvent(QPaintEvent *event);// Q_DECL_OVERRIDE;
      int updateLaserPicture;
      LaserMeasurement copyOfLaserData;
@@ -100,7 +100,8 @@ private:
      TKobukiData robotdata;
      int datacounter;
      QTimer *timer;
-
+     RobotPosition posHandler;
+     Position robotHandler;
 
 
 public slots:
