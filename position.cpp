@@ -3,45 +3,53 @@
 
 Position::Position()
 {
-    l_r = -1;
-    l_l = -1;
     setX(0);
     setY(0);
     setFi(0);
-    setEncR(0);
-    setEncL(0);
+    setEncR(-1);
+    setEncL(-1);
+
 };
 
 
 void Position::processData(TKobukiData data){
 
 //    signed short gyroRotation = ; gyroangle/100
+
         //Encoder overflow. 65 535
-//       if(data.EncoderRight >= 65534)
-//       {
-//           l_r = 0;
-//       };
 
-//       if(data.EncoderLeft >= 65534)
-//       {
-//           l_l = 0;
-//       };
+    if((getEncL() - SHRT_MAX  > data.EncoderLeft) && getEncL() > data.EncoderLeft)
+    {
+        //set sumthin left
 
-    // Encoder initial position values!!
-     if(l_r == -1 && l_l == -1)
+    }
+    else if((getEncR() - SHRT_MAX  > data.EncoderRight) && getEncR() > data.EncoderRight)
+    {
+        //set sumthin right
+    }
+    else if (())
+    {
+
+    }
+    else if (());
+    {
+
+    }
+   //  Encoder initial position values!!
+     if(enc_r == -1 && enc_l == -1)
         {
-           l_r = data.EncoderRight;
-           l_l = data.EncoderLeft;
+         setEncR(data.EncoderRight);
+         setEncL(data.EncoderLeft);
         }
     else
         {//Position & rotation of robot.
-          l_r = TICK * (data.EncoderRight - getEncR());
-          l_l = TICK * (data.EncoderRight - getEncL());
+          setEncR(TICK * (double)(data.EncoderRight - getEncR()));
+          setEncL(TICK * (double)(data.EncoderLeft - getEncL()));
 
           l = (l_l + l_r)/2;
 
-          pos.coord2D.x = getPosX() + l*cos(getRotation());
-          pos.coord2D.y = getPosY() + l*sin(getRotation());
+          pos.coord2D.x = getPosX() + l*cos(getRotation()/180*M_PI);
+          pos.coord2D.y = getPosY() + l*sin(getRotation()/180*M_PI);
           pos.fi = getRotation() + (((l_r - l_l) / wheel_base) / M_PI * 180);
 
           setEncR(data.EncoderRight);
@@ -89,7 +97,6 @@ int Position::getDistanceL()
 double Position::getPosX()
 {
    return pos.coord2D.x;
-
 }
 
 double Position::getPosY()

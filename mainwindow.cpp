@@ -85,8 +85,6 @@ void  MainWindow::setUiValues(double robotX,double robotY,double robotFi)
 
 void MainWindow::processThisRobot()
 {
-
-
     robotHandler.processData(robotdata);
     if(datacounter%5)
     {

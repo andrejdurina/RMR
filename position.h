@@ -22,12 +22,12 @@ class Position
  // Zdroj: http://yujinrobot.github.io/kobuki/enAppendixKobukiParameters.html?fbclid=IwAR1QU70qMPXtuFiY9FCHvbtb-zX5Na7foI5tYPjYYyp63epQWRcFwRYgjJA
           double wheel_base = 0.20;
 //        double wheel_radius = 0.035;
-        static constexpr double TICK= 0.000085292090497737556558;
+          static constexpr double TICK= 0.000085292090497737556558;
 
  // Definicia premennych
-       int l;         //Vzdialenost
-       int l_r;       //Prejdena vzdialenost praveho kolesa
-       int l_l;       //Prejdena vzdialenost laveho kolesa
+       double l;         //Vzdialenost
+       double l_r;       //Prejdena vzdialenost praveho kolesa
+       double l_l;       //Prejdena vzdialenost laveho kolesa
        int enc_r;
        int enc_l;
        RobotPosition pos;
