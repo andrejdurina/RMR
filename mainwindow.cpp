@@ -312,6 +312,7 @@ void MainWindow::getNewFrame()
 
 }
 
+// Reset robot button. Doesn't reset his position. Only the odometry.
 void MainWindow::on_pushButton_8_clicked()
 {
     robotHandler.setX(0);
@@ -319,12 +320,22 @@ void MainWindow::on_pushButton_8_clicked()
     robotHandler.setFi(0);
 }
 
-
+//Adds new waypoint for the robot.
 void MainWindow::on_pushButton_10_clicked()
 {
     // QString to 8bit string conversion.
     std::string current_locale_text = ui->lineEdit_5->text().toLocal8Bit().constData();
-    robotHandler.addWayPoint(current_locale_text);
+    robotHandler.addWayPointEnd(current_locale_text);
     ui->lineEdit_5->clear();
+    ui->listWidget->addItem(QString::fromStdString(current_locale_text));
+}
+
+//Delete waypoint from list of waypoints.
+void MainWindow::on_pushButton_12_clicked()
+{
+    /*TO-DO when clicked take index and delete the entry[index] in container of waypoints*/
+    int index = 0;
+    index = ui->listWidget->currentRow();
+    robotHandler.deleteWayPoint(index);
 }
 

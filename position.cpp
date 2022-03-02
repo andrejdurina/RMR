@@ -81,12 +81,12 @@ void Position::addWayPointStart(string position)
 
     double x = std::stod(X);
     double y = std::stod(Y);
-    this->waypoints.insert(waypoints.begin(),Coords(x,y));
+   // this->waypoints.insert(waypoints.begin(),Coords(x,y));
 };
 
-void Position::deleteWayPoint(string position)
+void Position::deleteWayPoint(int index)
 {
-    this->waypoints.pop_back(Coords(x,y));
+    //this->waypoints.pop_back(Coords(x,y));
 };
 
 Coords Position::getPosition(void)

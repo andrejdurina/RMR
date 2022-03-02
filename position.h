@@ -16,7 +16,7 @@
         };
             // Struktura pozicia a natocenia robota.
        struct RobotPosition{
-           Coords coord2D;  //Pozicia Y
+           Coords coord2D();  //Pozicia Y
            double fi;  //Uhol natocenia
        };
 
@@ -48,7 +48,7 @@ class Position
         // User waypoints
         void addWayPointEnd(string position);
         void addWayPointStart(string position);
-        void deleteWayPoint(string position);
+        void deleteWayPoint(int index);
         // Control waypoints
 
         //Setters

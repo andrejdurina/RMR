@@ -239,7 +239,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QTextBrowser" name="textBrowser"/>
+       <widget class="QListWidget" name="listWidget"/>
       </item>
       <item>
        <spacer name="verticalSpacer">
