@@ -3,61 +3,91 @@
 
 Position::Position()
 {
+        // Initialize everything to some values.
     setX(0);
     setY(0);
     setFi(0);
-    setEncR(-1);
-    setEncL(-1);
+    setEncR(-1.0);
+    setEncL(-1.0);
 
 };
 
 
 void Position::processData(TKobukiData data){
 
-//    signed short gyroRotation = ; gyroangle/100
-
-        //Encoder overflow. 65 535
-
-    if((getEncL() - SHRT_MAX  > data.EncoderLeft) && getEncL() > data.EncoderLeft)
-    {
-        //set sumthin left
-
-    }
-    else if((getEncR() - SHRT_MAX  > data.EncoderRight) && getEncR() > data.EncoderRight)
-    {
-        //set sumthin right
-    }
-    else if (())
-    {
-
-    }
-    else if (());
-    {
-
-    }
    //  Encoder initial position values!!
-     if(enc_r == -1 && enc_l == -1)
+     if(enc_r == -1.0 && enc_l == -1.0)
         {
          setEncR(data.EncoderRight);
          setEncL(data.EncoderLeft);
         }
+    //Calculate position & rotation of robot.
     else
-        {//Position & rotation of robot.
-          setEncR(TICK * (double)(data.EncoderRight - getEncR()));
-          setEncL(TICK * (double)(data.EncoderLeft - getEncL()));
+        {
+          this->l_l = (TICK * encoderOverflow(getEncL(),data.EncoderLeft));//(double)(data.EncoderLeft - getEncL()));
+          this->l_r = (TICK * encoderOverflow(getEncR(),data.EncoderRight));//(encoderOverflow(getEncR(),data.EncoderRight)));
 
           l = (l_l + l_r)/2;
 
-          pos.coord2D.x = getPosX() + l*cos(getRotation()/180*M_PI);
-          pos.coord2D.y = getPosY() + l*sin(getRotation()/180*M_PI);
-          pos.fi = getRotation() + (((l_r - l_l) / wheel_base) / M_PI * 180);
+          pos.coord2D.x = getPosX() + l*cos(getRotation());
+          pos.coord2D.y = getPosY() + l*sin(getRotation());
+          pos.fi = getRotation() + (((l_r - l_l) / wheel_base) );
 
           setEncR(data.EncoderRight);
           setEncL(data.EncoderLeft);
         }
 };
 
+//Encoder overflow. 65 535
+// Actual   --> Actual data from encoder.
+// Previous --> Previous data from encoder.
+double Position::encoderOverflow(unsigned short previous , unsigned short actual)
+{
+        if((previous - SHRT_MAX  > actual) && (previous > actual))
+        {
+            return actual - previous + USHRT_MAX;
 
+        }
+        else if ((previous - SHRT_MIN  < actual) && (previous < actual))
+        {
+            return actual - previous - USHRT_MAX ;
+        }
+        else
+            return actual - previous;
+};
+
+void Position::addWayPointEnd(string position)
+{
+    int index;
+    string X,Y;
+    index = position.find(' ');
+
+    X = position.substr(0,index);
+    Y = position.substr(index,string::npos);
+
+    double x = std::stod(X);
+    double y = std::stod(Y);
+    this->waypoints.push_back(Coords(x,y));
+};
+
+void Position::addWayPointStart(string position)
+{
+    int index;
+    string X,Y;
+    index = position.find(' ');
+
+    X = position.substr(0,index);
+    Y = position.substr(index,string::npos);
+
+    double x = std::stod(X);
+    double y = std::stod(Y);
+    this->waypoints.insert(waypoints.begin(),Coords(x,y));
+};
+
+void Position::deleteWayPoint(string position)
+{
+    this->waypoints.pop_back(Coords(x,y));
+};
 
 Coords Position::getPosition(void)
 {
@@ -104,11 +134,11 @@ double Position::getPosY()
     return pos.coord2D.y;
 }
 
-int Position::getEncR()
+unsigned short Position::getEncR()
 {
     return enc_r;
 }
-int Position::getEncL()
+unsigned short Position::getEncL()
 {
     return enc_l;
 }

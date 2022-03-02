@@ -89,7 +89,7 @@ void MainWindow::processThisRobot()
     if(datacounter%5)
     {
         //emit uiValuesChanged(robotdata.EncoderLeft,11,12);
-        emit uiValuesChanged(robotHandler.getPosX(),robotHandler.getPosY(),robotHandler.getRotation());
+        emit uiValuesChanged(robotHandler.getPosX(),robotHandler.getPosY(),(robotHandler.getRotation()/ M_PI * 180));
     }
     datacounter++;
 
@@ -317,5 +317,14 @@ void MainWindow::on_pushButton_8_clicked()
     robotHandler.setX(0);
     robotHandler.setY(0);
     robotHandler.setFi(0);
+}
+
+
+void MainWindow::on_pushButton_10_clicked()
+{
+    // QString to 8bit string conversion.
+    std::string current_locale_text = ui->lineEdit_5->text().toLocal8Bit().constData();
+    robotHandler.addWayPoint(current_locale_text);
+    ui->lineEdit_5->clear();
 }
 
