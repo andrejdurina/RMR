@@ -19,11 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
  //   connect(timer, SIGNAL(timeout()), this, SLOT(getNewFrame()));
     actIndex=-1;
     useCamera=false;
-
-
-
     datacounter=0;
-
 
 }
 
@@ -98,14 +94,11 @@ void MainWindow::processThisRobot()
 void MainWindow::processThisLidar(LaserMeasurement &laserData)
 {
 
-
     memcpy( &copyOfLaserData,&laserData,sizeof(LaserMeasurement));
     //tu mozete robit s datami z lidaru.. napriklad najst prekazky, zapisat do mapy. naplanovat ako sa prekazke vyhnut.
     // ale nic vypoctovo narocne - to iste vlakno ktore cita data z lidaru
     updateLaserPicture=1;
     update();//tento prikaz prinuti prekreslit obrazovku.. zavola sa paintEvent funkcia
-
-
 
 }
 
@@ -215,11 +208,7 @@ void MainWindow::laserprocess()
 
         //     memcpy(&sens,buff,sizeof(sens));
 
-
         processThisLidar(measure);
-
-
-
 
     }
 }
@@ -324,10 +313,10 @@ void MainWindow::on_pushButton_8_clicked()
 void MainWindow::on_pushButton_10_clicked()
 {
     // QString to 8bit string conversion.
-    std::string current_locale_text = ui->lineEdit_5->text().toLocal8Bit().constData();
-    robotHandler.addWayPointEnd(current_locale_text);
+    std::string edit_text = ui->lineEdit_5->text().toLocal8Bit().constData();
+    robotHandler.addWayPointEnd(edit_text);
+    ui->listWidget->addItem(QString::fromStdString(edit_text));
     ui->lineEdit_5->clear();
-    ui->listWidget->addItem(QString::fromStdString(current_locale_text));
 }
 
 //Delete waypoint from list of waypoints.

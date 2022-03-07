@@ -4,21 +4,23 @@
 #include "math.h"
 #include <string>
 #include <iostream>
+#include <deque>
 
-        struct Coords{
-            double x;
-            double y;
-            Coords(double x,double y)
+struct Coords{
+    double x;
+    double y;
+    Coords(double x,double y)
             {
                 this->x = x;
                 this->y = y;
             };
-        };
-            // Struktura pozicia a natocenia robota.
-       struct RobotPosition{
-           Coords coord2D();  //Pozicia Y
-           double fi;  //Uhol natocenia
-       };
+};
+
+   // Struktura pozicia a natocenia robota.
+struct RobotPosition{
+      Coords coord2D();  //Pozicia Y
+      double fi;  //Uhol natocenia
+     };
 
 
 class Position
@@ -38,7 +40,7 @@ class Position
        unsigned short enc_r;
        unsigned short enc_l;
        RobotPosition pos;
-       vector<Coords> waypoints;
+       deque<Coords> waypoints;
 
  // Prototypy funkcií
         Position();
@@ -46,8 +48,8 @@ class Position
         // Buffer overflow
         double encoderOverflow (unsigned short previous , unsigned short actual);
         // User waypoints
-        void addWayPointEnd(string position);
-        void addWayPointStart(string position);
+        void addWayPointBack(string waypoint);
+        void addWayPointFront(string waypoint);
         void deleteWayPoint(int index);
         // Control waypoints
 

@@ -42,12 +42,13 @@ void Position::processData(TKobukiData data){
 // Actual   --> Actual data from encoder.
 // Previous --> Previous data from encoder.
 double Position::encoderOverflow(unsigned short previous , unsigned short actual)
-{
+{       //Overflow +
         if((previous - SHRT_MAX  > actual) && (previous > actual))
         {
             return actual - previous + USHRT_MAX;
 
         }
+        //Overflow -
         else if ((previous - SHRT_MIN  < actual) && (previous < actual))
         {
             return actual - previous - USHRT_MAX ;
@@ -56,37 +57,38 @@ double Position::encoderOverflow(unsigned short previous , unsigned short actual
             return actual - previous;
 };
 
-void Position::addWayPointEnd(string position)
+void Position::addWayPointBack(string waypoint)
 {
     int index;
     string X,Y;
-    index = position.find(' ');
+    index = waypoint.find(' ');
 
-    X = position.substr(0,index);
-    Y = position.substr(index,string::npos);
+
+    X = waypoint.substr(0,index);
+    Y = waypoint.substr(index,string::npos);
 
     double x = std::stod(X);
     double y = std::stod(Y);
     this->waypoints.push_back(Coords(x,y));
 };
 
-void Position::addWayPointStart(string position)
+void Position::addWayPointFront(string waypoint)
 {
     int index;
     string X,Y;
-    index = position.find(' ');
+    index = waypoint.find(' ');
 
-    X = position.substr(0,index);
-    Y = position.substr(index,string::npos);
+    X = waypoint.substr(0,index);
+    Y = waypoint.substr(index,string::npos);
 
     double x = std::stod(X);
     double y = std::stod(Y);
-   // this->waypoints.insert(waypoints.begin(),Coords(x,y));
+    this->waypoints.push_front(Coords(x,y));
 };
 
 void Position::deleteWayPoint(int index)
 {
-    //this->waypoints.pop_back(Coords(x,y));
+    this->waypoints.erase(waypoints.begin()+index);
 };
 
 Coords Position::getPosition(void)
