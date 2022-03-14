@@ -4,8 +4,8 @@
 Position::Position()
 {
         // Initialize everything to some values.
-    setX(0);
-    setY(0);
+    setPosX(0);
+    setPosY(0);
     setFi(0);
     setEncR(-1.0);
     setEncL(-1.0);
@@ -24,14 +24,14 @@ void Position::processData(TKobukiData data){
     //Calculate position & rotation of robot.
     else
         {
-          this->l_l = (TICK * encoderOverflow(getEncL(),data.EncoderLeft));//(double)(data.EncoderLeft - getEncL()));
-          this->l_r = (TICK * encoderOverflow(getEncR(),data.EncoderRight));//(encoderOverflow(getEncR(),data.EncoderRight)));
+          this->l_l = (TICK * encoderOverflow(getEncL(),data.EncoderLeft));
+          this->l_r = (TICK * encoderOverflow(getEncR(),data.EncoderRight));
 
           l = (l_l + l_r)/2;
 
-          pos.coord2D.x = getPosX() + l*cos(getRotation());
-          pos.coord2D.y = getPosY() + l*sin(getRotation());
-          pos.fi = getRotation() + (((l_r - l_l) / wheel_base) );
+          setPosX(getPosX() + l*cos(getRotation()));
+          setPosY(getPosY() + l*sin(getRotation()));
+          setFi(getRotation() + (((l_r - l_l) / wheel_base) ));
 
           setEncR(data.EncoderRight);
           setEncL(data.EncoderLeft);
@@ -91,9 +91,43 @@ void Position::deleteWayPoint(int index)
     this->waypoints.erase(waypoints.begin()+index);
 };
 
-Coords Position::getPosition(void)
+
+
+Coords diffCoords(Coords start, Coords end)
 {
-    return pos.coord2D;
+    Coords result(end.x - start.x,end.y - start.y);
+    return result;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+setCoords Position::getPosition(void)
+{
+    return pos.coord2D();
 };
 
 double Position::getRotation(void)
@@ -101,14 +135,14 @@ double Position::getRotation(void)
     return pos.fi;
 };
 
-void Position::setX(double x)
+void Position::setPosX(double x)
 {
-    pos.coord2D.x = x;
+    pos.coord2D().x = x;
 }
 
-void Position::setY(double y)
+void Position::setPosY(double y)
 {
-    pos.coord2D.y = y;
+    pos.coord2D().y = y;
 }
 
 void Position::setFi(double fi)
@@ -128,12 +162,12 @@ int Position::getDistanceL()
 
 double Position::getPosX()
 {
-   return pos.coord2D.x;
+   return pos.coord2D().x;
 }
 
 double Position::getPosY()
 {
-    return pos.coord2D.y;
+    return pos.coord2D().y;
 }
 
 unsigned short Position::getEncR()

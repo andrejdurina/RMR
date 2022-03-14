@@ -6,7 +6,6 @@ class Navigation
 {
 public:
     Navigation();
-    void setCourse();
     double clcDeviation(Coords start, Coords end);
 };
 

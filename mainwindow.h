@@ -12,6 +12,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include<math.h>
 #include<vector>
 #include "ckobuki.h"
 #include "rplidar.h"
@@ -24,7 +25,7 @@
 #include "opencv2/videoio.hpp"
 #include "opencv2/imgcodecs.hpp"*/
 #include "position.h"
-
+#include "navigation.h"
 namespace Ui {
 class MainWindow;
 }
@@ -95,6 +96,10 @@ private slots:
 
     void on_pushButton_12_clicked();
 
+    void on_pushButton_11_clicked();
+
+    void setTranslationSpeed(int speed);
+    void setRotationSpeed(int rotation);
 private:
      JOYINFO joystickInfo;
      Ui::MainWindow *ui;
@@ -107,7 +112,8 @@ private:
      int datacounter;
      QTimer *timer;
      Position robotHandler;
-
+     Navigation robotNavigator;
+     double err_distance,err_rotation;
 
 public slots:
      void setUiValues(double robotX,double robotY,double robotFi);

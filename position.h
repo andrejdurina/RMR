@@ -14,12 +14,16 @@ struct Coords{
                 this->x = x;
                 this->y = y;
             };
+    bool operator==(const Coords obj)
+    {
+        return this->x == obj.x && this->y == obj.y;/* your comparison code goes here */
+    };
 };
 
    // Struktura pozicia a natocenia robota.
 struct RobotPosition{
       Coords coord2D();  //Pozicia Y
-      double fi;  //Uhol natocenia
+      double fi;         //Uhol natocenia
      };
 
 
@@ -39,7 +43,7 @@ class Position
        double l_l;       //Prejdena vzdialenost laveho kolesa
        unsigned short enc_r;
        unsigned short enc_l;
-       RobotPosition pos;
+       static RobotPosition pos;
        deque<Coords> waypoints;
 
  // Prototypy funkcií
@@ -52,10 +56,10 @@ class Position
         void addWayPointFront(string waypoint);
         void deleteWayPoint(int index);
         // Control waypoints
-
+        Coords diffCoords(Coords start, Coords end);
         //Setters
-        void setX(double x);
-        void setY(double y);
+        void setPosX(double x);
+        void setPosY(double y);
         void setFi(double fi);
         void setEncR(int value);
         void setEncL(int value);

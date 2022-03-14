@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     datacounter=0;
   //  timer = new QTimer(this);
  //   connect(timer, SIGNAL(timeout()), this, SLOT(getNewFrame()));
+
     actIndex=-1;
     useCamera=false;
     datacounter=0;
@@ -304,8 +305,8 @@ void MainWindow::getNewFrame()
 // Reset robot button. Doesn't reset his position. Only the odometry.
 void MainWindow::on_pushButton_8_clicked()
 {
-    robotHandler.setX(0);
-    robotHandler.setY(0);
+    robotHandler.setPosX(0);
+    robotHandler.setPosY(0);
     robotHandler.setFi(0);
 }
 
@@ -314,7 +315,7 @@ void MainWindow::on_pushButton_10_clicked()
 {
     // QString to 8bit string conversion.
     std::string edit_text = ui->lineEdit_5->text().toLocal8Bit().constData();
-    robotHandler.addWayPointEnd(edit_text);
+    robotHandler.addWayPointBack(edit_text);
     ui->listWidget->addItem(QString::fromStdString(edit_text));
     ui->lineEdit_5->clear();
 }
@@ -328,3 +329,34 @@ void MainWindow::on_pushButton_12_clicked()
     robotHandler.deleteWayPoint(index);
 }
 
+// Set robot on it's course, atta boy!
+void MainWindow::on_pushButton_11_clicked()
+{
+    if(robotHandler.waypoints.size() > 0){
+        err_distance = robotNavigator.clcDeviation(robotHandler.getPosition(),robotHandler.waypoints.front());
+       //coords = robotHandler.diffCoords(robotHandler.getPosition(),robotHandler.waypoints.front());
+       //err_rotation = atan2(coords.y,coords.x);
+    //Robot dojde na bod , over ho , vymaz bod z decku. continue
+        if (err_distance < 0.5)
+        {
+            robotHandler.waypoints.pop_front();
+        }
+    }
+}
+
+void MainWindow::setTranslationSpeed(int speed)
+{
+    std::vector<unsigned char> mess=robot.setTranslationSpeed(speed);
+    if (sendto(rob_s, (char*)mess.data(), sizeof(char)*mess.size(), 0, (struct sockaddr*) &rob_si_posli, rob_slen) == -1)
+    {
+
+    }
+}
+void MainWindow::setRotationSpeed(int rotation)
+{
+    std::vector<unsigned char> mess=robot.setRotationSpeed(rotation);
+    if (sendto(rob_s, (char*)mess.data(), sizeof(char)*mess.size(), 0, (struct sockaddr*) &rob_si_posli, rob_slen) == -1)
+    {
+
+    }
+}
