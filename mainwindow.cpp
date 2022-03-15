@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-
+    robotNavigator = new Navigation(this);
     //tu je napevno nastavena ip. treba zmenit na to co ste si zadali do text boxu alebo nejaku inu pevnu. co bude spravna
     ipaddress="127.0.0.1";
     //cap.open("http://192.168.1.11:8000/stream.mjpg");
@@ -17,7 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
     datacounter=0;
   //  timer = new QTimer(this);
  //   connect(timer, SIGNAL(timeout()), this, SLOT(getNewFrame()));
-
+    connect(robotNavigator,&Navigation::setTranslationSpeed,this,&MainWindow::setTranslationSpeed);
+    connect(robotNavigator,&Navigation::setRotationSpeed,this,&MainWindow::setRotationSpeed);
     actIndex=-1;
     useCamera=false;
     datacounter=0;
@@ -83,6 +84,7 @@ void  MainWindow::setUiValues(double robotX,double robotY,double robotFi)
 void MainWindow::processThisRobot()
 {
     robotHandler.processData(robotdata);
+    robotNavigator->processData(robotHandler);
     if(datacounter%5)
     {
         //emit uiValuesChanged(robotdata.EncoderLeft,11,12);
@@ -315,32 +317,32 @@ void MainWindow::on_pushButton_10_clicked()
 {
     // QString to 8bit string conversion.
     std::string edit_text = ui->lineEdit_5->text().toLocal8Bit().constData();
-    robotHandler.addWayPointBack(edit_text);
-    ui->listWidget->addItem(QString::fromStdString(edit_text));
-    ui->lineEdit_5->clear();
+    if(edit_text.size() != 0)
+    {
+        robotHandler.addWayPointBack(edit_text);
+        ui->listWidget->addItem(QString::fromStdString(edit_text));
+        ui->lineEdit_5->clear();
+    }
 }
 
 //Delete waypoint from list of waypoints.
 void MainWindow::on_pushButton_12_clicked()
 {
-    /*TO-DO when clicked take index and delete the entry[index] in container of waypoints*/
-    int index = 0;
-    index = ui->listWidget->currentRow();
-    robotHandler.deleteWayPoint(index);
+    if(robotHandler.waypoints.size() > 0 )
+    {
+        int index = 0;
+        index = ui->listWidget->currentRow();
+        ui->listWidget->model()->removeRow(index);
+        robotHandler.deleteWayPoint(index);
+    }
 }
 
 // Set robot on it's course, atta boy!
 void MainWindow::on_pushButton_11_clicked()
 {
-    if(robotHandler.waypoints.size() > 0){
-        err_distance = robotNavigator.clcDeviation(robotHandler.getPosition(),robotHandler.waypoints.front());
-       //coords = robotHandler.diffCoords(robotHandler.getPosition(),robotHandler.waypoints.front());
-       //err_rotation = atan2(coords.y,coords.x);
-    //Robot dojde na bod , over ho , vymaz bod z decku. continue
-        if (err_distance < 0.5)
-        {
-            robotHandler.waypoints.pop_front();
-        }
+    if(!robotNavigator->nav_active)
+    {
+        robotNavigator->nav_active = true;
     }
 }
 
@@ -360,3 +362,13 @@ void MainWindow::setRotationSpeed(int rotation)
 
     }
 }
+
+void MainWindow::on_pushButton_13_clicked()
+{
+    if(robotNavigator->nav_active)
+    {
+        robotNavigator->nav_active = false;
+        setTranslationSpeed(0);
+    }
+}
+

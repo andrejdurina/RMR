@@ -7,8 +7,8 @@
 #include <deque>
 
 struct Coords{
-    double x;
-    double y;
+    double x{0};
+    double y{0};
     Coords(double x,double y)
             {
                 this->x = x;
@@ -22,8 +22,8 @@ struct Coords{
 
    // Struktura pozicia a natocenia robota.
 struct RobotPosition{
-      Coords coord2D();  //Pozicia Y
-      double fi;         //Uhol natocenia
+    Coords coord2D{0, 0};  //Pozicia Y
+    double fi{0};         //Uhol natocenia
      };
 
 
@@ -38,17 +38,18 @@ class Position
           static constexpr double TICK= 0.000085292090497737556558;
 
  // Definicia premennych
-       double l;         //Vzdialenost
+          double l;         //Vzdialenost
        double l_r;       //Prejdena vzdialenost praveho kolesa
        double l_l;       //Prejdena vzdialenost laveho kolesa
-       unsigned short enc_r;
-       unsigned short enc_l;
-       static RobotPosition pos;
+       int enc_r;
+       int enc_l;
+       RobotPosition pos;
        deque<Coords> waypoints;
 
  // Prototypy funkcií
         Position();
         void processData(TKobukiData data);
+        double AngleLimiter( double &fi);
         // Buffer overflow
         double encoderOverflow (unsigned short previous , unsigned short actual);
         // User waypoints
@@ -69,8 +70,8 @@ class Position
         double getRotation(void);
         int getDistanceR();
         int getDistanceL();
-        unsigned short getEncR();
-        unsigned short getEncL();
+        int getEncR();
+        int getEncL();
         double getPosX();
         double getPosY();
 };

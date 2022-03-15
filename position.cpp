@@ -17,10 +17,10 @@ void Position::processData(TKobukiData data){
 
    //  Encoder initial position values!!
      if(enc_r == -1.0 && enc_l == -1.0)
-        {
+     {
          setEncR(data.EncoderRight);
          setEncL(data.EncoderLeft);
-        }
+     }
     //Calculate position & rotation of robot.
     else
         {
@@ -93,7 +93,7 @@ void Position::deleteWayPoint(int index)
 
 
 
-Coords diffCoords(Coords start, Coords end)
+Coords Position::diffCoords(Coords start, Coords end)
 {
     Coords result(end.x - start.x,end.y - start.y);
     return result;
@@ -101,33 +101,23 @@ Coords diffCoords(Coords start, Coords end)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-setCoords Position::getPosition(void)
+double Position::AngleLimiter( double &fi)
 {
-    return pos.coord2D();
+    while(fi > M_PI)
+    {
+        fi = fi-2*M_PI;
+    }
+    while(fi < -M_PI)
+    {
+        fi = fi+2*M_PI;
+    }
+    return fi;
+}
+
+
+Coords Position::getPosition(void)
+{
+    return pos.coord2D;
 };
 
 double Position::getRotation(void)
@@ -137,17 +127,17 @@ double Position::getRotation(void)
 
 void Position::setPosX(double x)
 {
-    pos.coord2D().x = x;
+    pos.coord2D.x = x;
 }
 
 void Position::setPosY(double y)
 {
-    pos.coord2D().y = y;
+    pos.coord2D.y = y;
 }
 
 void Position::setFi(double fi)
 {
-    pos.fi = fi;
+    pos.fi = AngleLimiter(fi);
 }
 
 int Position::getDistanceR()
@@ -162,19 +152,19 @@ int Position::getDistanceL()
 
 double Position::getPosX()
 {
-   return pos.coord2D().x;
+   return pos.coord2D.x;
 }
 
 double Position::getPosY()
 {
-    return pos.coord2D().y;
+    return pos.coord2D.y;
 }
 
-unsigned short Position::getEncR()
+int Position::getEncR()
 {
     return enc_r;
 }
-unsigned short Position::getEncL()
+int Position::getEncL()
 {
     return enc_l;
 }

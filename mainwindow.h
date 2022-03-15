@@ -100,6 +100,8 @@ private slots:
 
     void setTranslationSpeed(int speed);
     void setRotationSpeed(int rotation);
+    void on_pushButton_13_clicked();
+
 private:
      JOYINFO joystickInfo;
      Ui::MainWindow *ui;
@@ -112,8 +114,8 @@ private:
      int datacounter;
      QTimer *timer;
      Position robotHandler;
-     Navigation robotNavigator;
-     double err_distance,err_rotation;
+     Navigation *robotNavigator;
+
 
 public slots:
      void setUiValues(double robotX,double robotY,double robotFi);
