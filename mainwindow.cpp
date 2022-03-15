@@ -328,7 +328,7 @@ void MainWindow::on_pushButton_10_clicked()
 //Delete waypoint from list of waypoints.
 void MainWindow::on_pushButton_12_clicked()
 {
-    if(robotHandler.waypoints.size() > 0 )
+    if(ui->listWidget->count() > 0 )
     {
         int index = 0;
         index = ui->listWidget->currentRow();

@@ -2,8 +2,8 @@
 #define NAVIGATION_H
 #include <qobject.h>
 #include "position.h"
-#define UPPER_LIMIT ( 2*M_PI/180 )
-#define LOWER_LIMIT ( M_PI/180/2 )
+#define UPPER_LIMIT ( 4 * M_PI/180 )
+#define LOWER_LIMIT ( M_PI/180 )
 class Navigation : public QObject
 {
     Q_OBJECT
@@ -19,7 +19,7 @@ private:
     double rotation_speed;
     double translation_speed;
     Coords coords{0,0};
-    bool rotate_robot = true,translate_robot = false;
+    bool rotate_robot ;
 signals:
    void setTranslationSpeed(int speed);
    void setRotationSpeed(double rotation);
