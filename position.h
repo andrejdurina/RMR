@@ -44,7 +44,6 @@ class Position
        int enc_r;
        int enc_l;
        RobotPosition pos;
-       deque<Coords> waypoints;
 
  // Prototypy funkcií
         Position();
@@ -52,10 +51,6 @@ class Position
         double AngleLimiter( double &fi);
         // Buffer overflow
         double encoderOverflow (unsigned short previous , unsigned short actual);
-        // User waypoints
-        void addWayPointBack(string waypoint);
-        void addWayPointFront(string waypoint);
-        void deleteWayPoint(int index);
         // Control waypoints
         Coords diffCoords(Coords start, Coords end);
         //Setters

@@ -74,6 +74,7 @@ public:
     int rob_s,  rob_recv_len;
     unsigned int rob_slen;
 
+
 private slots:
     void on_pushButton_9_clicked();
 
@@ -98,9 +99,12 @@ private slots:
 
     void on_pushButton_11_clicked();
 
-    void setTranslationSpeed(int speed);
-    void setRotationSpeed(int rotation);
     void on_pushButton_13_clicked();
+
+    void setTranslationSpeed(int speed);
+    void setRotationSpeed(double rotation);
+    void deleteWaypointGUI(int index);
+
 
 private:
      JOYINFO joystickInfo;

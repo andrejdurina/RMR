@@ -57,40 +57,6 @@ double Position::encoderOverflow(unsigned short previous , unsigned short actual
             return actual - previous;
 };
 
-void Position::addWayPointBack(string waypoint)
-{
-    int index;
-    string X,Y;
-    index = waypoint.find(' ');
-
-
-    X = waypoint.substr(0,index);
-    Y = waypoint.substr(index,string::npos);
-
-    double x = std::stod(X);
-    double y = std::stod(Y);
-    this->waypoints.push_back(Coords(x,y));
-};
-
-void Position::addWayPointFront(string waypoint)
-{
-    int index;
-    string X,Y;
-    index = waypoint.find(' ');
-
-    X = waypoint.substr(0,index);
-    Y = waypoint.substr(index,string::npos);
-
-    double x = std::stod(X);
-    double y = std::stod(Y);
-    this->waypoints.push_front(Coords(x,y));
-};
-
-void Position::deleteWayPoint(int index)
-{
-    this->waypoints.erase(waypoints.begin()+index);
-};
-
 
 
 Coords Position::diffCoords(Coords start, Coords end)

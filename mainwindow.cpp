@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
  //   connect(timer, SIGNAL(timeout()), this, SLOT(getNewFrame()));
     connect(robotNavigator,&Navigation::setTranslationSpeed,this,&MainWindow::setTranslationSpeed);
     connect(robotNavigator,&Navigation::setRotationSpeed,this,&MainWindow::setRotationSpeed);
+    connect(robotNavigator,&Navigation::deleteWaypointGUI,this,&MainWindow::deleteWaypointGUI);
     actIndex=-1;
     useCamera=false;
     datacounter=0;
@@ -319,7 +320,7 @@ void MainWindow::on_pushButton_10_clicked()
     std::string edit_text = ui->lineEdit_5->text().toLocal8Bit().constData();
     if(edit_text.size() != 0)
     {
-        robotHandler.addWayPointBack(edit_text);
+        robotNavigator->addWayPointBack(edit_text);
         ui->listWidget->addItem(QString::fromStdString(edit_text));
         ui->lineEdit_5->clear();
     }
@@ -330,10 +331,9 @@ void MainWindow::on_pushButton_12_clicked()
 {
     if(ui->listWidget->count() > 0 )
     {
-        int index = 0;
+        int index;
         index = ui->listWidget->currentRow();
-        ui->listWidget->model()->removeRow(index);
-        robotHandler.deleteWayPoint(index);
+        robotNavigator->deleteWayPoint(index);
     }
 }
 
@@ -345,6 +345,10 @@ void MainWindow::on_pushButton_11_clicked()
         robotNavigator->nav_active = true;
     }
 }
+void MainWindow::deleteWaypointGUI(int index)
+{
+    ui->listWidget->model()->removeRow(index);
+}
 
 void MainWindow::setTranslationSpeed(int speed)
 {
@@ -354,7 +358,7 @@ void MainWindow::setTranslationSpeed(int speed)
 
     }
 }
-void MainWindow::setRotationSpeed(int rotation)
+void MainWindow::setRotationSpeed(double rotation)
 {
     std::vector<unsigned char> mess=robot.setRotationSpeed(rotation);
     if (sendto(rob_s, (char*)mess.data(), sizeof(char)*mess.size(), 0, (struct sockaddr*) &rob_si_posli, rob_slen) == -1)
