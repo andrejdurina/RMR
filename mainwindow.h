@@ -26,6 +26,8 @@
 #include "opencv2/imgcodecs.hpp"*/
 #include "position.h"
 #include "navigation.h"
+#include "mapper.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -119,6 +121,7 @@ private:
      QTimer *timer;
      Position robotHandler;
      Navigation *robotNavigator;
+     Mapper mapper;
 
 
 public slots:

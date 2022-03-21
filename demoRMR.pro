@@ -62,12 +62,14 @@ LIBS += -lWinmm
 
 SOURCES += main.cpp\
         mainwindow.cpp \
+    mapper.cpp \
     navigation.cpp \
     position.cpp \
     rplidar.cpp \
     CKobuki.cpp
 
 HEADERS  += mainwindow.h \
+    mapper.h \
     navigation.h \
     position.h \
     rplidar.h \
