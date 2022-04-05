@@ -6,6 +6,11 @@ Navigation::Navigation(QObject *parent):
 
 }
 
+bool Navigation::IsRobotRotating()
+{
+    return rotate_robot;
+}
+
 double Navigation::clcDeviation(Coords start, Coords end)
 {    double result,x,y;
 

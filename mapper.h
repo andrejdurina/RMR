@@ -3,17 +3,24 @@
 
 #include <iostream>
 #include <fstream>
-#include "mainwindow.h"
+#include "rplidar.h"
+#include "position.h"
+
+#define OFFSET 1.0
+
 class Mapper
 {
 
 public:
     Mapper();
-    int** processData(LaserMeasurement data);
-    void generateMap(int** map);
+    void processData(Position &robot, LaserMeasurement data);
+    void generateMap();
 private:
-    int map[500][500];
+    double x,y;
+    int x_index,y_index;
+    int map[300][300];
     std::ofstream myfile;
+
 };
 
 #endif // MAPPER_H

@@ -108,6 +108,8 @@ private slots:
     void deleteWaypointGUI(int index);
 
 
+    void on_Save_clicked();
+
 private:
      JOYINFO joystickInfo;
      Ui::MainWindow *ui;
@@ -122,13 +124,14 @@ private:
      Position robotHandler;
      Navigation *robotNavigator;
      Mapper mapper;
+     deque<Coords> map;
 
 
 public slots:
      void setUiValues(double robotX,double robotY,double robotFi);
 signals:
      void uiValuesChanged(double newrobotX,double newrobotY,double newrobotFi); ///toto nema telo
-
+ //    void processData(LaserMeasurement data);
 
 };
 

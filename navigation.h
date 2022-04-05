@@ -17,6 +17,7 @@ public:
     void deleteWayPoint(int index);
     void addWayPointFront(string waypoint);
     void addWayPointBack(string waypoint);
+    bool IsRobotRotating();
     deque<Coords> waypoints;
 private:
     double err_distance,err_rotation,rotation;
