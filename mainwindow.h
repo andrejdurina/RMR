@@ -110,6 +110,8 @@ private slots:
 
     void on_Save_clicked();
 
+    void on_Load_clicked();
+
 private:
      JOYINFO joystickInfo;
      Ui::MainWindow *ui;

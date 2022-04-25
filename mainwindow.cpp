@@ -389,3 +389,9 @@ void MainWindow::on_Save_clicked()
    mapper.generateMap();
 }
 
+
+void MainWindow::on_Load_clicked()
+{
+    mapper.loadMap();
+}
+
