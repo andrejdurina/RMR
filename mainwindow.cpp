@@ -386,12 +386,23 @@ void MainWindow::on_pushButton_13_clicked()
 
 void MainWindow::on_Save_clicked()
 {
-   mapper.generateMap();
+   mapper.saveMap();
 }
 
 
 void MainWindow::on_Load_clicked()
 {
     mapper.loadMap();
+}
+
+
+void MainWindow::on_pushButton_14_clicked()
+{
+    std::string edit_text = ui->lineEdit_5->text().toLocal8Bit().constData();
+    if(edit_text.size() != 0)
+    {
+        mapper.FloodFill(robotNavigator->parseInput(edit_text),robotHandler);
+        mapper.saveFloodedMap();
+    }
 }
 

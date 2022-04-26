@@ -19,6 +19,7 @@ public:
     void addWayPointBack(string waypoint);
     bool IsRobotRotating();
     deque<Coords> waypoints;
+    Coords parseInput(string waypoint);
 private:
     double err_distance,err_rotation,rotation;
     double rotation_speed;

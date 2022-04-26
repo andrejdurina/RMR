@@ -9,6 +9,7 @@
 struct Coords{
     double x{0};
     double y{0};
+    Coords() = default;
     Coords(double x,double y)
             {
                 this->x = x;
@@ -19,6 +20,22 @@ struct Coords{
         return this->x == obj.x && this->y == obj.y;/* your comparison code goes here */
     };
 };
+
+struct Coords_I{
+    int x{0};
+    int y{0};
+    Coords_I() = default;
+    Coords_I(int x,int y)
+            {
+                this->x = x;
+                this->y = y;
+            };
+    bool operator==(const Coords_I obj)
+    {
+        return this->x == obj.x && this->y == obj.y;/* your comparison code goes here */
+    };
+};
+
 
    // Struktura pozicia a natocenia robota.
 struct RobotPosition{

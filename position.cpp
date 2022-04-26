@@ -46,7 +46,6 @@ double Position::encoderOverflow(unsigned short previous , unsigned short actual
         if((previous - SHRT_MAX  > actual) && (previous > actual))
         {
             return actual - previous + USHRT_MAX;
-
         }
         //Overflow -
         else if ((previous - SHRT_MIN  < actual) && (previous < actual))

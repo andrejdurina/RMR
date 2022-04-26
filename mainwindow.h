@@ -112,6 +112,8 @@ private slots:
 
     void on_Load_clicked();
 
+    void on_pushButton_14_clicked();
+
 private:
      JOYINFO joystickInfo;
      Ui::MainWindow *ui;

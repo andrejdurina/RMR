@@ -250,6 +250,13 @@
        </layout>
       </item>
       <item>
+       <widget class="QPushButton" name="pushButton_14">
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QListWidget" name="listWidget"/>
       </item>
       <item>

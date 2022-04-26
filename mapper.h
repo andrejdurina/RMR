@@ -4,7 +4,6 @@
 #include <iostream>
 #include <fstream>
 #include <queue>
-#include <unordered_set>
 #include "rplidar.h"
 #include "position.h"
 
@@ -17,13 +16,17 @@ class Mapper
 public:
     Mapper();
     void processData(Position &robot, LaserMeasurement data);
-    void generateMap();
+    void saveMap();
     void loadMap();
-    void FloodFill();
+    void FloodFill(Coords coords,Position &robot);
+    void postProcessData();
+    Coords_I fromWorldToIndex(Coords coords);
+    void saveFloodedMap();
 private:
     double x,y;
     int x_index,y_index;
     int map[VERTICAL_MAP_LIMIT][HORIZONTAL_MAP_LIMIT];
+    int cpy_map[HORIZONTAL_MAP_LIMIT][VERTICAL_MAP_LIMIT];
     std::ofstream wfile;
     std::ifstream rfile;
 };
