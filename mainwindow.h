@@ -131,6 +131,7 @@ private:
      deque<Coords> map;
 
 
+
 public slots:
      void setUiValues(double robotX,double robotY,double robotFi);
 signals:

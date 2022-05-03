@@ -398,11 +398,21 @@ void MainWindow::on_Load_clicked()
 
 void MainWindow::on_pushButton_14_clicked()
 {
+    deque<Coords> waypoints;
     std::string edit_text = ui->lineEdit_5->text().toLocal8Bit().constData();
     if(edit_text.size() != 0)
     {
         mapper.FloodFill(robotNavigator->parseInput(edit_text),robotHandler);
         mapper.saveFloodedMap();
+        waypoints = mapper.generateWaypoints(robotHandler);
+        for(int i = 0; waypoints.size() ; i++)
+        {
+            robotNavigator->addWayPointBack(waypoints.front());
+            ui->listWidget->addItem(waypoints.front().toString());
+            waypoints.pop_front();
+        }
+
+        ui->lineEdit_5->clear();
     }
 }
 

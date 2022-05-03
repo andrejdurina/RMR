@@ -56,8 +56,6 @@ double Position::encoderOverflow(unsigned short previous , unsigned short actual
             return actual - previous;
 };
 
-
-
 Coords Position::diffCoords(Coords start, Coords end)
 {
     Coords result(end.x - start.x,end.y - start.y);

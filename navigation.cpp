@@ -77,6 +77,9 @@ void Navigation::processData(Position& robotHandler)
 
 }
 
+
+
+
 void Navigation::Controller()
 {
     if(rotate_robot && (abs(err_rotation) < LOWER_LIMIT))
@@ -110,6 +113,11 @@ void Navigation::addWayPointBack(string waypoint)
 {
 
     this->waypoints.push_back(parseInput(waypoint));
+};
+
+void Navigation::addWayPointBack(Coords waypoint)
+{
+    this->waypoints.push_back(waypoint);
 };
 
 void Navigation::addWayPointFront(string waypoint)
@@ -160,3 +168,4 @@ Coords Navigation::parseInput(string waypoint)
     double y = std::stod(Y);
     return Coords(x,y);
 }
+

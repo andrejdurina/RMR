@@ -17,9 +17,11 @@ public:
     void deleteWayPoint(int index);
     void addWayPointFront(string waypoint);
     void addWayPointBack(string waypoint);
+    void addWayPointBack(Coords waypoint);
     bool IsRobotRotating();
     deque<Coords> waypoints;
     Coords parseInput(string waypoint);
+
 private:
     double err_distance,err_rotation,rotation;
     double rotation_speed;
@@ -35,7 +37,7 @@ signals:
    void setTranslationSpeed(int speed);
    void setRotationSpeed(double rotation);
    void deleteWaypointGUI(int index);
-
+   
 };
 
 #endif // NAVIGATION_H

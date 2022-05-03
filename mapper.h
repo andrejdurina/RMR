@@ -21,7 +21,9 @@ public:
     void FloodFill(Coords coords,Position &robot);
     void postProcessData();
     Coords_I fromWorldToIndex(Coords coords);
+    Coords   fromIndexToWorld(Coords_I coords);
     void saveFloodedMap();
+    deque<Coords> generateWaypoints(Position &robot);
 private:
     double x,y;
     int x_index,y_index;
@@ -29,6 +31,8 @@ private:
     int cpy_map[HORIZONTAL_MAP_LIMIT][VERTICAL_MAP_LIMIT];
     std::ofstream wfile;
     std::ifstream rfile;
+    deque<Coords> waypoints;
+    Coords finish;
 };
 
 #endif // MAPPER_H

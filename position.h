@@ -5,7 +5,7 @@
 #include <string>
 #include <iostream>
 #include <deque>
-
+#include "QString"
 struct Coords{
     double x{0};
     double y{0};
@@ -18,6 +18,11 @@ struct Coords{
     bool operator==(const Coords obj)
     {
         return this->x == obj.x && this->y == obj.y;/* your comparison code goes here */
+    };
+
+    QString toString()
+    {
+       return  QString::number(this->x)+ " " + QString::number(this->y);
     };
 };
 
